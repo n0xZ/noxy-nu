@@ -11,9 +11,11 @@
     "@nuxt/devtools": "^0.1.0",
     "@sidebase/nuxt-auth": "^0.4.1",
     "@types/node": "^18.13.0",
-    "nuxt": "3.0"
+    "nuxt": "3.0",
+    "nuxt-vitest": "^0.6.6"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.10",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.10.1",
     "@tanstack/vue-query": "^4.24.4",
