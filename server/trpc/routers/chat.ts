@@ -1,5 +1,6 @@
 import { publicProcedure, router } from '../trpc'
 import { z } from 'zod'
+import { TRPCError } from '@trpc/server'
 
 export const chatRouter = router({
 	chatsRelatedToUser: publicProcedure
@@ -9,7 +10,9 @@ export const chatRouter = router({
 			})
 		)
 		.query(async ({ input, ctx }) => {
-			const chats = await ctx.chat.findFirst({ where: { userId: input.userId } })
+			const chats = await ctx.chat.findFirst({
+				where: { members: { every: { id: input.userId } } },
+			})
 			return chats
 		}),
 	chatsBasedOnUserInfo: publicProcedure
@@ -22,8 +25,13 @@ export const chatRouter = router({
 			const existingUser = await ctx.user.findFirst({
 				where: { email: input.email },
 			})
+			if (!existingUser)
+				throw new TRPCError({
+					message: 'Error: User does not exist',
+					code: 'BAD_REQUEST',
+				})
 			const existingUserChats = await ctx.chat.findMany({
-				where: { userId: existingUser?.id },
+				where: { members: { some: { id: existingUser.id } } },
 			})
 			return existingUserChats
 		}),
@@ -34,9 +42,32 @@ export const chatRouter = router({
 			return existingChat
 		}),
 	createChat: publicProcedure
-		.input(z.object({ userId: z.string() }))
+		.input(
+			z.object({
+				chatTitle: z
+					.string()
+					.min(2, { message: 'El campo requiere de más de 2 carácteres' }),
+				authorName: z.string(),
+				creatorId: z.string(),
+			})
+		)
 		.mutation(async ({ ctx, input }) => {
-			const createdChat = await ctx.chat.create({ data: { userId: input.userId } })
+			const createdChat = await ctx.chat.create({
+				data: {
+					members: { connect: { name: input.authorName } },
+					name: input.chatTitle,
+					creatorId: input.creatorId,
+				},
+			})
+			return createdChat
+		}),
+	addUserToChat: publicProcedure
+		.input(z.object({ userId: z.string(), chatId: z.string() }))
+		.mutation(async ({ ctx, input }) => {
+			const createdChat = await ctx.chat.update({
+				data: { members: { connect: { id: input.userId } } },
+				where: { id: input.chatId },
+			})
 			return createdChat
 		}),
 	deleteChat: publicProcedure
