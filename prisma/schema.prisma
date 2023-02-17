@@ -63,7 +63,8 @@ model User {
 }
 model Chat{
 id String @id @default(cuid())
-userId String
+name String
+creatorId String
 members  User[] 
 messages Message[]
 }
