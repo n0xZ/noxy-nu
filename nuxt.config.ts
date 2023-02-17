@@ -4,6 +4,7 @@ export default defineNuxtConfig({
 		'@unocss/nuxt',
 		'@sidebase/nuxt-auth',
 		'nuxt-vitest',
+		'nuxt-icon',
 	],
 	unocss: {
 		webFonts: {

@@ -12,6 +12,7 @@
     "@sidebase/nuxt-auth": "^0.4.1",
     "@types/node": "^18.13.0",
     "nuxt": "3.0",
+    "nuxt-icon": "^0.3.2",
     "nuxt-vitest": "^0.6.6"
   },
   "dependencies": {
