@@ -7,6 +7,7 @@ export default defineNuxtConfig({
 		'nuxt-icon',
 		'@vueuse/nuxt',
 		'@vite-pwa/nuxt',
+		'@nuxt/image-edge',
 	],
 	unocss: {
 		webFonts: {
@@ -19,6 +20,7 @@ export default defineNuxtConfig({
 	build: {
 		transpile: ['trpc-nuxt'],
 	},
+
 	sourcemap: {
 		server: true,
 		client: false,
