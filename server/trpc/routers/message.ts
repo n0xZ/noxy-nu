@@ -12,7 +12,7 @@ export const messageRouter = router({
 		.input(
 			z.object({ chatId: z.string(), authorId: z.string(), content: z.string() })
 		)
-		.query(async ({ input: { chatId, authorId, content }, ctx }) => {
+		.mutation(async ({ input: { chatId, authorId, content }, ctx }) => {
 			const createdMessage = await ctx.message.create({
 				data: { authorId, content, chatId },
 			})
@@ -20,7 +20,7 @@ export const messageRouter = router({
 		}),
 	deleteMessage: publicProcedure
 		.input(z.object({ id: z.string() }))
-		.query(async ({ input: { id }, ctx }) => {
+		.mutation(async ({ input: { id }, ctx }) => {
 			const deletedMessage = await ctx.message.delete({
 				where: { id },
 			})
