@@ -8,6 +8,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET!
 export default NuxtAuthHandler({
 	adapter: PrismaAdapter(client),
 	secret: process.env.AUTH_SECRET,
+	pages: { signIn: '/login' },
 	providers: [
 		// @ts-expect-error
 		GithubProvider.default({
