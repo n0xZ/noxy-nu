@@ -1,13 +1,8 @@
 <script setup lang="ts">
 	import { Menu, MenuItem, MenuItems, MenuButton } from '@headlessui/vue'
-	import { SessionData } from '@sidebase/nuxt-auth/dist/runtime/composables/useSessionState'
 
-	type MenuProps = {
-		imgSrc?: string | null
-		session?: SessionData
-	}
-	const { signOut } = useSession()
-	const props = defineProps<MenuProps>()
+	const { signOut, data, status } = useSession()
+	const isLoading = status.value === 'loading'
 </script>
 
 <template>
@@ -15,8 +10,12 @@
 		<MenuButton
 			class="w-full flex flex-row justify-center items-center space-x-2 rounded-md text-sm font-medium c-neutral-500 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
 		>
-			<img :src="props.imgSrc!" class="rounded-full w-9 h-9" />
-			<p>{{ session?.user?.name }}</p>
+			<img
+				:src="data?.user?.image!"
+				:class="`rounded-full w-9 h-9  ${
+					isLoading ? 'grayscale blur-2xl scale-110' : 'grayscale-0 blur-0 scale-100'
+				}`"
+			/>
 		</MenuButton>
 		<transition
 			enter="transition ease-out duration-100"
@@ -31,15 +30,13 @@
 			>
 				<div className="px-1 py-1 ">
 					<MenuItem v-slot="active">
-						<NuxtLink
+						<p
 							:class="` ${
 								active ? 'c-neutral-500' : 'c-neutral-900'
-							} group flex w-full items-center rounded-md px-2 py-2 text-sm space-x-2 `"
-							to="/home/projects/create"
+							} group flex w-full items-center rounded-md px-2 py-2 text-sm space-x-2  `"
 						>
-							<div class="i-carbon-task-add h-4 w-4"></div>
-							<span>Crear proyecto</span></NuxtLink
-						>
+							{{ data?.user?.email }}
+						</p>
 					</MenuItem>
 					<MenuItem v-slot="active">
 						<button
@@ -48,7 +45,7 @@
 								active ? 'c-neutral-500' : 'c-neutral-900'
 							} group flex w-full items-center rounded-md px-2 py-2 text-sm space-x-2  `"
 						>
-							<div class="i-carbon-logout h-4 w-4"></div>
+							<Icon class="h-4 w-4" :name="'carbon-logout'" />
 
 							<span>Cerrar sesión</span>
 						</button>
