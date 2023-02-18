@@ -11,7 +11,7 @@
 		class="h-screen grid place-items-center container mx-auto max-w-4xl p-3"
 	>
 		<button
-			class="px-3 py-3 w-full rounded-lg flex flex-row items-center justify-center space-x-5 bg-amber-500 c-white"
+			class="px-3 py-3 w-full rounded-lg flex flex-row items-center justify-center space-x-5 bg-sky-500 c-white"
 			@click="signInViaGithub()"
 		>
 			<Icon :name="'carbon-logo-github'" class="h-6 w-6" />
