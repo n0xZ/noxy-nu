@@ -3,6 +3,7 @@
 
 	const { signOut, data, status } = useSession()
 	const isLoading = status.value === 'loading'
+	const username = data.value?.user?.name
 </script>
 
 <template>
@@ -12,6 +13,7 @@
 		>
 			<img
 				:src="data?.user?.image!"
+				:alt="`Imagen de perfil de ${!isLoading ? username : 'usuario'}`"
 				:class="`rounded-full w-9 h-9  ${
 					isLoading ? 'grayscale blur-2xl scale-110' : 'grayscale-0 blur-0 scale-100'
 				}`"
