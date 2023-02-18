@@ -11,23 +11,28 @@
 		isOpen: boolean
 		author: { id: string; name: string }
 		closeModal: () => void
+		createChat: ({
+			chatName,
+			authorName,
+			creatorId,
+		}: {
+			authorName: string
+			creatorId: string
+			chatName: string
+		}) => void
 	}
 	const formRefs = ref({ chatName: '' })
 	const isLoading = ref(false)
-	const { $client } = useNuxtApp()
 	const props = defineProps<Props>()
 
 	const onSubmit = async () => {
 		isLoading.value = true
-		const data = await $client.createChat.mutate({
-			chatTitle: formRefs.value.chatName,
+		await props.createChat({
+			chatName: formRefs.value.chatName,
 			creatorId: props.author.id,
 			authorName: props.author.name,
 		})
-		if (data) {
-			isLoading.value = false
-			location.reload()
-		}
+		isLoading.value = false
 	}
 </script>
 
@@ -87,9 +92,9 @@
 									<button
 										type="submit"
 										:disabled="isLoading"
-										className="inline-flex justify-center rounded-md border border-transparent bg-rose-400 px-4 py-2 text-base font-medium text-neutral-50 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+										className="inline-flex justify-center rounded-md border border-transparent bg-sky-400 px-4 py-2 text-base font-medium text-neutral-50 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
 									>
-										Crear nueva colección
+										{{ !isLoading ? 'Crear nueva colección' : 'Creando...' }}
 									</button>
 									<button
 										type="button"
