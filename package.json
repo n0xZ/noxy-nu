@@ -9,7 +9,6 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.1.0",
-    "@nuxt/image-edge": "1.0.0-27919678.2f5b64b",
     "@sidebase/nuxt-auth": "^0.4.1",
     "@types/node": "^18.13.0",
     "@vite-pwa/nuxt": "^0.0.5",

@@ -7,7 +7,6 @@ export default defineNuxtConfig({
 		'nuxt-icon',
 		'@vueuse/nuxt',
 		'@vite-pwa/nuxt',
-		'@nuxt/image-edge',
 	],
 	unocss: {
 		webFonts: {
