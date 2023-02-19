@@ -67,7 +67,7 @@
 	</header>
 	<section className="flex  flex-row h-full  ">
 		<aside
-			className="xl:w-96 lg:w-96 w-32   shadow-sm    border-neutral-100 border-r-2 rounded  col-start-1 col-end-1 container mx-auto"
+			className="xl:w-96 lg:w-96 md:w-32 w-28   shadow-sm    border-neutral-100 border-r-2 rounded  col-start-1 col-end-1 container mx-auto"
 		>
 			<span
 				class="w-full flex flex-row justify-between items-center mt-3 p-5 items-center space-x-7"
