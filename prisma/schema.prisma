@@ -74,6 +74,7 @@ model Message{
   authorId String
   chatId String
   content String
+  createdAt DateTime @default(now())
   chat Chat @relation(fields: [chatId],references: [id],onDelete: Cascade,onUpdate: Cascade)
 }
 
