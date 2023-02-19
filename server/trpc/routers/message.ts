@@ -5,7 +5,9 @@ export const messageRouter = router({
 	messagesByChatId: publicProcedure
 		.input(z.object({ chatId: z.string() }))
 		.query(async ({ input: { chatId }, ctx }) => {
-			const messages = await ctx.message.findMany({ where: { id: chatId } })
+			const messages = await ctx.message.findMany({
+				where: { chat: { id: chatId } },
+			})
 			return messages
 		}),
 	createMessage: publicProcedure
