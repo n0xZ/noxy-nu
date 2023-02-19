@@ -1,7 +1,8 @@
 <script setup lang="ts">
 	definePageMeta({ middleware: ['auth'] })
-
+	useHead({ title: 'Noxy-nu | Home' })
 	const { getSession, data: sessionData } = useSession()
+	const userId = useUserId()
 	const { $client } = useNuxtApp()
 	const isOpen = ref(false)
 
@@ -20,6 +21,7 @@
 			const user = await $client.userByEmail.query({
 				email: sessionData.value?.user?.email!,
 			})
+			userId.value = user?.id
 			return { userId: user?.id, username: user?.name }
 		},
 		{ lazy: true }
@@ -52,7 +54,7 @@
 </script>
 
 <template>
-	<header class="p-5">
+	<header class="p-5 border-b-2 border-neutral-100">
 		<nav
 			class="flex flex-row items-center justify-between container mx-auto max-w-4xl"
 		>
@@ -63,17 +65,19 @@
 			<MenuHomeDropdown />
 		</nav>
 	</header>
-	<section className="xl:flex lg:flex md:flex xl:flex-row h-screen  hidden">
+	<section className="flex  flex-row h-full  ">
 		<aside
-			className="w-96  shadow-sm   border-neutral-50 border-r-2 rounded h-full col-start-1 col-end-1 container mx-auto"
+			className="xl:w-96 lg:w-96 w-32   shadow-sm    border-neutral-100 border-r-2 rounded  col-start-1 col-end-1 container mx-auto"
 		>
 			<span
-				class="w-full flex flex-row justify-center mt-3 items-center space-x-7"
+				class="w-full flex flex-row justify-between items-center mt-3 p-5 items-center space-x-7"
 			>
-				<h1 className=" font-medium text-lg    text-center">Lista de chats</h1>
+				<h1 className=" font-medium xl:text-lg text-sm    text-center">
+					Chats actuales
+				</h1>
 				<Icon
-					name="carbon:forum"
-					class="h-6 w-6 cursor-pointer"
+					name="mdi:chat-plus-outline"
+					class="h-5 w-5 cursor-pointer"
 					@click="openModal"
 				/>
 			</span>
@@ -83,15 +87,11 @@
 			</p>
 			<ChatList v-else :chats="chatsData.chats" />
 		</aside>
-		<article className="grid place-items-center w-full items-center">
+		<article className="grid place-items-center w-full items-center h-full ">
 			<NuxtPage />
 		</article>
 	</section>
-	<section
-		className="xl:hidden lg:hidden sm:hidden  relative min-h-screen h-full"
-	>
-		<NuxtPage />
-	</section>
+
 	<ChatCreateChat
 		v-if="!pending"
 		:is-open="isOpen"
