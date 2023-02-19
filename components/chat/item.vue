@@ -6,14 +6,14 @@
 	}
 	defineProps<Props>()
 	const defaultItemClass =
-		'p-5  flex flex-row   items-center space-x-3   h-full  w-full    '
+		'p-5  flex flex-row   items-center space-x-3   h-full  w-full    rounded-lg '
 	const route = useRoute()
 </script>
 
 <template>
 	<NuxtLink
 		:key="chat.id"
-		:to="`/home/chat/${chat.id}`"
+		:to="`/home/chat/?title=${chat.name}&id=${chat.id}`"
 		:class="`${defaultItemClass} ${
 			route.params.id && route.params.id === chat.id
 				? 'bg-sky-200 c-neutral-700'
