@@ -8,7 +8,8 @@ type ErrorOutput = TRPCClientError<AppRouter>
 export const useGetMessageByChatId = (chatId: string) => {
 	const { $client } = useNuxtApp()
 	return useAsyncData<GetMessageOutput, ErrorOutput>(
-		'messagesByChatId',
-		async () => await $client.messagesByChatId.query({ chatId })
+		`message-from-chat-${chatId}`,
+		async () => await $client.messagesByChatId.query({ chatId }),
+		{ lazy: true, server: false }
 	)
 }
