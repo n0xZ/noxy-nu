@@ -27,17 +27,25 @@
 		isLoading.value = false
 		messageContent.value = ''
 	}
+	const defaultInputClass = 'px-3 py-4 rounded-md  outline-none w-full'
 </script>
 
 <template>
-	<div class="w-full p-3 border-t-2 border-neutral-100">
+	<div
+		class="w-full flex flex-row justify-end items-center p-3 border-t-2 border-neutral-100"
+	>
 		<input
 			type="text"
-			class="px-3 py-4 rounded-md bg-sky-200 outline-none w-full"
+			:class="`${defaultInputClass} ${isLoading ? 'bg-sky-100' : 'bg-sky-50'} `"
 			placeholder="Ingrese su mensaje a enviar"
 			:disabled="isLoading"
 			v-model="messageContent"
 			@keyup.enter="onSubmit"
+		/>
+		<Icon
+			name="line-md:loading-loop"
+			class="xl:w-7 xl:h-7 w-6 h-6 absolute mr-4 mb-1 cursor-not-allowed"
+			v-if="isLoading"
 		/>
 	</div>
 </template>
