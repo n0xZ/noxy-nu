@@ -18,14 +18,16 @@
 	const isLoading = ref(false)
 
 	const onSubmit = async () => {
-		isLoading.value = true
-		await props.sendMessage({
-			authorId: userId.value!,
-			chatId,
-			content: messageContent.value,
-		})
-		isLoading.value = false
-		messageContent.value = ''
+		if (messageContent.value.length >= 1) {
+			isLoading.value = true
+			await props.sendMessage({
+				authorId: userId.value!,
+				chatId,
+				content: messageContent.value,
+			})
+			isLoading.value = false
+			messageContent.value = ''
+		}
 	}
 	const defaultInputClass = 'px-3 py-4 rounded-md  outline-none w-full'
 </script>
